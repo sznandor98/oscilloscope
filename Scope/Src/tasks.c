@@ -47,10 +47,17 @@ void State_Task(){
 		if(current_state == STATE_TIMEBASE){
 			if(encoder_scrolled == ENCODER_SCROLLED_UP){
 				if(channels[i].chosen == CHANNEL_CHOSEN){
-					if(channels[i].sampling_idx < 7){
-						channels[i].sampling_idx++;
-						channels[i].sampling_changed = TRUE;
+					if(channels[i].adc == ADC_EXT){
+						if(channels[i].sampling_idx < 4){
+							channels[i].sampling_idx++;
+						}
 					}
+					else{
+						if(channels[i].sampling_idx < 7){
+							channels[i].sampling_idx++;
+						}
+					}
+					channels[i].sampling_changed = TRUE;
 				}
 			}
 			else if(encoder_scrolled == ENCODER_SCROLLED_DOWN){

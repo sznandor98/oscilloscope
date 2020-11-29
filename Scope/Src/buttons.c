@@ -26,7 +26,6 @@ void handlePress(btnStruct* btn) {
 		if (HAL_GetTick() - btn->pressTime > DEBOUNCE_TIME_MS && HAL_GetTick() - btn->releaseTime > DEBOUNCE_TIME_MS) {
 			btn->pressTime = HAL_GetTick();
 			btn->state = BTN_STATE_PRESSED;
-			btn->isPressed = 1;
 		}
 	}
 }
@@ -36,6 +35,7 @@ void handleRelease(btnStruct* btn) {
 		{
 			btn->releaseTime = HAL_GetTick();
 			btn->state = BTN_STATE_RELEASED;
+			btn->isPressed = 1;
 		}
 	}
 }

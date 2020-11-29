@@ -84,12 +84,12 @@ void drawGui(){
 
 	// draw 10 x 8 grid to green area
 	uint8_t i;
+	uint8_t grid_diff = TRACE_AREA_WIDTH/10;
 	for(i = 1; i < 10; i++){
-		uint8_t grid_diff = TRACE_AREA_WIDTH/10;
 		ili9341_draw_line(_screen, ILI9341_BLACK, TRACE_AREA_XOFFSET+i*grid_diff, TRACE_AREA_HEIGHT, TRACE_AREA_XOFFSET+i*grid_diff, TRACE_AREA_YOFFSET+TRACE_AREA_HEIGHT+10);
 	}
+	grid_diff = (TRACE_AREA_HEIGHT/8)+1;
 	for(i = 1; i < 8; i++){
-		uint8_t grid_diff = TRACE_AREA_HEIGHT/8;
 		ili9341_draw_line(_screen, ILI9341_BLACK, 0, i*grid_diff, TRACE_AREA_XOFFSET, i*grid_diff);
 	}
 
@@ -140,14 +140,17 @@ void updateTriggerIndicator(){
 			if(prevtriggers[channels[i].id] != channels[i].trig_lvl){
 				float32_t conv_val;
 				uint16_t trig_val;
+
 				conv_val = ((float32_t)prevtriggers[channels[i].id])/255.0f;
 				trig_val = (uint16_t)(TRACE_AREA_HEIGHT - conv_val*TRACE_AREA_HEIGHT);
 				ili9341_fill_rect(_screen, ILI9341_WHITE, 0, trig_val, 9, 5);
+
 				conv_val = ((float32_t)channels[i].trig_lvl)/255.0f;
 				trig_val = (uint16_t)(TRACE_AREA_HEIGHT - conv_val*TRACE_AREA_HEIGHT);
 				ili9341_fill_rect(_screen, channels[i].color, 0, trig_val, 9, 5);
+
+				uint8_t grid_diff = (TRACE_AREA_HEIGHT/8)+1;
 				for(uint8_t i = 1; i < 8; i++){
-					uint8_t grid_diff = TRACE_AREA_HEIGHT/8;
 					ili9341_draw_line(_screen, ILI9341_BLACK, 0, i*grid_diff, TRACE_AREA_XOFFSET, i*grid_diff);
 				}
 				prevtriggers[channels[i].id] = channels[i].trig_lvl;
@@ -176,10 +179,10 @@ void updateTrace(uint8_t channel_id, uint8_t step){
 		}
 	}
 	if(channels[channel_id].adc == ADC_MCU){
-		vpps[channel_id] = 1.25f*CH_DIVs[channels[channel_id].div_idx]*((float32_t)(max - min)/TRACE_AREA_HEIGHTf)*channels[channel_id].input_voltage_range;
+		vpps[channel_id] = 1.25f*CH_DIVs[channels[channel_id].div_idx]*((float32_t)(max - min)/(float32_t)TRACE_AREA_HEIGHT)*3.3f;
 	}
 	else{
-		vpps[channel_id] = 10.0f*CH_DIVs[channels[channel_id].div_idx]*((float32_t)(max - min)/TRACE_AREA_HEIGHTf)*1.024f;
+		vpps[channel_id] = 10.0f*CH_DIVs[channels[channel_id].div_idx]*((float32_t)(max - min)/(float32_t)TRACE_AREA_HEIGHT)*1.024f;
 	}
 
 	uint16_t x2 = 0;
@@ -279,7 +282,12 @@ void updateValues(){
 				snprintf(BufferText, sizeof(BufferText), "%.1fkHz/D", tb);
 			}
 			// set div var
-			div = 0.33f * CH_DIVs[channels[i].div_idx];
+			if(channels[i].adc == ADC_MCU){
+				div = 1.25f*CH_DIVs[channels[i].div_idx]*0.126f*3.3f;
+			}
+			else{
+				div = 10.0f*CH_DIVs[channels[i].div_idx]*0.126f*1.024f;
+			}
 
 			// set frequency var
 			if(channels[i].frequency > 999){

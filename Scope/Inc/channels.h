@@ -80,7 +80,6 @@ typedef struct channelStruct {
 	uint8_t displayMode;
 	uint16_t color;
 	uint8_t adc;
-	float input_voltage_range;
 	float frequency;
 } channelStruct;
 

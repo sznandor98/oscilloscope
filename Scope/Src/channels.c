@@ -30,12 +30,12 @@ channelStruct channels[] = {
 		{.id = CH1_ID, .state = CHANNEL_ACTIVE, .chosen = CHANNEL_CHOSEN, .div_idx = 0, .div_changed = FALSE,
 		.sampling_idx = 0, .sampling_changed = FALSE, .trig_lvl = 128, .trig_edge = CHANNEL_TRIGGER_RISING, .converting = FALSE,
 		.triggered = FALSE, .coupling = CHANNEL_DC, .coupling_changed = FALSE, .buffSize = ADC_BUF_LEN,
-		.bufferFull = FALSE, .displayMode = DISPLAYMODE_TIME, .color = CH1_COLOR, .input_voltage_range = 3.3f, .adc = ADC_MCU},
+		.bufferFull = FALSE, .displayMode = DISPLAYMODE_TIME, .color = CH1_COLOR, .adc = ADC_MCU},
 
 		{.id = CH2_ID, .state = CHANNEL_INACTIVE, .chosen = CHANNEL_NOT_CHOSEN, .div_idx = 0, .div_changed = FALSE,
 		.sampling_idx = 0, .sampling_changed = FALSE, .trig_lvl = 128, .trig_edge = CHANNEL_TRIGGER_RISING, .converting = FALSE,
 		.triggered = FALSE, .coupling = CHANNEL_DC, .coupling_changed = FALSE, .buffSize = ADC_BUF_LEN,
-		.bufferFull = FALSE, .displayMode = DISPLAYMODE_TIME, .color = CH2_COLOR, .input_voltage_range = 3.3f, .adc = ADC_MCU}
+		.bufferFull = FALSE, .displayMode = DISPLAYMODE_TIME, .color = CH2_COLOR, .adc = ADC_MCU}
 };
 
 uint8_t ok = 0;
