@@ -112,6 +112,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim){
 	__disable_irq();
 	if(htim->Instance == TIM1){
 		IC_Val1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
+		IC_Val1 += 2;
 		if(IC_Val1 != 0)
 			Frequency = (HAL_RCC_GetPCLK1Freq()/IC_Val1);
 		else
