@@ -5,3 +5,5 @@
 - ~4 MHz bandwidth
 - Frequency, Vpp measurement
 - FFT
+
+Display driver used: https://github.com/ardnew/ILI9341-STM32-HAL
