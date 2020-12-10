@@ -6,4 +6,6 @@
 - Frequency, Vpp measurement
 - FFT
 
+Demo video: https://youtu.be/Mn-Ub7uaeuA
+
 Display driver used: https://github.com/ardnew/ILI9341-STM32-HAL
